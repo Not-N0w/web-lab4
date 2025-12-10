@@ -1,0 +1,29 @@
+<div class="clear-button-wrapper">
+  <p-button icon="pi pi-trash" class="clear-button" [loading]="loading" [disabled]="loading"
+            (click)="clearHits()">
+  </p-button>
+</div>
+
+<p-table [value]="(hits$ | async) ?? []" [paginator]="true" [rows]="8"
+         [tableStyle]="{ 'min-width': '50rem', 'table-layout': 'fixed' }">
+  <ng-template #header>
+    <tr>
+      <th style="width: calc(100%/6);">X</th>
+      <th style="width: calc(100%/6);">Y</th>
+      <th style="width: calc(100%/6);">R</th>
+      <th style="width: calc(100%/6);">Hit?</th>
+      <th style="width: calc(100%/6);">Execution Time</th>
+      <th style="width: calc(100%/6);">Current Time</th>
+    </tr>
+  </ng-template>
+  <ng-template #body let-hit>
+    <tr>
+      <td [title]="hit.x">{{ hit.x | shortNumber }}</td>
+      <td [title]="hit.y">{{ hit.y | shortNumber }}</td>
+      <td [title]="hit.r">{{ hit.r | shortNumber }}</td>
+      <td>{{ hit.hit }}</td>
+      <td>{{ hit.executionTime }} ms</td>
+      <td>{{ hit.currentTime }}</td>
+    </tr>
+  </ng-template>
+</p-table>

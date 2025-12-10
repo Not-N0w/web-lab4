@@ -1,0 +1,11 @@
+backend/lab4/.idea
+backend/lab4/.gradle
+
+backend/lab4/*
+!backend/lab4/libs/
+
+frontend/extra
+
+frontend/hits/.vscode
+frontend/hits/.idea
+frontend/hits/node_modules

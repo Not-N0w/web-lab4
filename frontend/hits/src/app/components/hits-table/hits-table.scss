@@ -1,0 +1,21 @@
+@use 'variables' as *;
+.clear-button-wrapper {
+    width: 35px;
+    padding: 0;
+    margin: 0;
+    margin-bottom: 10px;
+
+    ::ng-deep p-button button {
+        background-color: transparent;
+        border: 1px solid $primary-color;
+        color: $primary-color;
+        height: 35px;
+        aspect-ratio: 1/1;
+        transition: 0.2s ease-in-out;
+        &:hover {
+            background-color: $primary-color;
+            color: $surface-color;
+        }
+    }
+
+}

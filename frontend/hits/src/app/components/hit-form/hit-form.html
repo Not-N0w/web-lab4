@@ -1,0 +1,61 @@
+<div class="outer">
+    <div class="form-wrapper">
+        <h2>HIT</h2>
+        <form [formGroup]="hitForm" (ngSubmit)="send()">
+            <div class="input-group">
+
+                <div class="form-item">
+                    <label for="x-input">X:</label>
+                    <input id="x-input" type="number" formControlName="x" min="-2" max="2" step="0.5"
+                        autocomplete="off" />
+                    <p-message severity="error" *ngIf="hitForm.get('x')?.touched && hitForm.get('x')?.hasError('list')">
+                        X must be from the allowed list
+                    </p-message>
+                    <p-message severity="error"
+                        *ngIf="hitForm.get('x')?.touched && hitForm.get('x')?.hasError('required')">
+                        X is required
+                    </p-message>
+                </div>
+
+                <div class="form-item">
+                    <label for="y-input">Y:</label>
+                    <input id="y-input" type="text" formControlName="y" (blur)="onBlur('y')" autocomplete="off" />
+                    <p-message severity="error"
+                        *ngIf="hitForm.get('y')?.touched && hitForm.get('y')?.hasError('range')">
+                        Y value must be from -3 to 3
+                    </p-message>
+                    <p-message severity="error"
+                        *ngIf="hitForm.get('y')?.touched && hitForm.get('y')?.hasError('pattern')">
+                        Invalid number
+                    </p-message>
+                    <p-message severity="error"
+                        *ngIf="hitForm.get('y')?.touched && hitForm.get('y')?.hasError('required')">
+                        Y is required
+                    </p-message>
+                </div>
+
+                <div class="form-item">
+                    <label for="r-input">R:</label>
+                    <input id="r-input" type="number" formControlName="r" min="-2" max="2" step="0.5"
+                        autocomplete="off" />
+                    <p-message severity="error" *ngIf="hitForm.get('r')?.touched && hitForm.get('r')?.hasError('list')">
+                        R must be from the allowed list
+                    </p-message>
+                    <p-message severity="error"
+                        *ngIf="hitForm.get('r')?.touched && hitForm.get('r')?.hasError('required')">
+                        R is required
+                    </p-message>
+                </div>
+
+            </div>
+            <div>
+                <p-message *ngIf="serverErrorMessage" [severity]="'error'" [text]="serverErrorMessage"
+                    [life]="3000"></p-message>
+                <p-button type="submit" [outlined]="true" [disabled]="loading || !hitForm.valid" [loading]="loading"
+                    [label]="loading ? '' : 'HIT!'">
+                </p-button>
+
+            </div>
+        </form>
+    </div>
+</div>

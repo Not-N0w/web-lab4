@@ -1,0 +1,15 @@
+<header class="header">
+    <div class="header-container">
+        <div class="title-group">
+            <h1 class="title-text">lab4</h1>
+            <span class="title-variant">(var.23557)</span>
+        </div>
+
+        @if (isLoggedIn) {
+        <div class="info-group logged-in">
+            <span class="info-name">{{ username }}</span>
+            <p-button icon="pi pi-sign-out" aria-label="Save" (click)="logout()"></p-button>
+        </div>
+        }
+    </div>
+</header>
