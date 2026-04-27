@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import org.springframework.transaction.annotation.Transactional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -51,7 +52,7 @@ public class HitService {
                         hit.getCurrentTime(),
                         hit.getExecutionTime()
                 ))
-                .toList();
+                .collect(Collectors.toList());
     }
     @Transactional(readOnly = true)
     public void clear() {

@@ -132,12 +132,13 @@ export class AuthenticationService {
 
     async login(): Promise<void> {
         await this.keycloak.login({ redirectUri: environment.keycloak.redirectUri });
+        
+        console.log('Login successful, token:', this.keycloak.token);
 
         if (this.keycloak.token) {
             const token = this.keycloak.token;
             this.ws.connect(token);
             this.setCookie('access_token', token);
-
             this.tabSync.send({
                 type: 'login',
                 token

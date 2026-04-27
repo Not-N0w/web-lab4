@@ -13,7 +13,7 @@ public class WebConfig {
     @Bean
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {
-            @Value("webapp.url")
+            @Value("${webapp.url}")
             private String webappUrl;
 
             @Override
@@ -23,7 +23,6 @@ public class WebConfig {
                         .allowedMethods("*")
                         .allowedHeaders("*")
                         .allowCredentials(true);
-
 
                 registry.addMapping("/**")
                         .allowedOrigins(this.webappUrl)

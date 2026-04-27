@@ -13,7 +13,8 @@ public class SecurityService {
             return null;
         }
         Object principal = auth.getPrincipal();
-        if (principal instanceof Jwt jwt) {
+        if (principal instanceof Jwt) {
+            Jwt jwt = (Jwt) principal;
             return jwt.getSubject();
         }
         return null;

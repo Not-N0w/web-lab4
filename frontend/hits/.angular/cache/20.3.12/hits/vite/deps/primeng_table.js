@@ -14,14 +14,6 @@ import {
   blockBodyScroll,
   unblockBodyScroll
 } from "./chunk-ZTETZWEO.js";
-import {
-  FormsModule,
-  NG_VALUE_ACCESSOR,
-  NgControl,
-  NgControlStatus,
-  NgModel,
-  RequiredValidator
-} from "./chunk-DLPR7GV6.js";
 import "./chunk-XNP5SNM6.js";
 import {
   Ripple
@@ -117,6 +109,14 @@ import {
   trigger,
   useAnimation
 } from "./chunk-COUXE7FZ.js";
+import {
+  FormsModule,
+  NG_VALUE_ACCESSOR,
+  NgControl,
+  NgControlStatus,
+  NgModel,
+  RequiredValidator
+} from "./chunk-DLPR7GV6.js";
 import {
   CommonModule,
   NgClass,

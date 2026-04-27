@@ -1,0 +1,40 @@
+services:
+  db:
+    image: postgres
+    environment:
+      POSTGRES_DB: "lab4_db"
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d postgres"]
+      interval: 10s
+      retries: 5
+      start_period: 30s
+      timeout: 10s
+
+  keycloak:
+    build: ./backend/keycloak-26.4.6/
+    environment:
+      KC_BOOTSTRAP_ADMIN_USERNAME: "admin"
+      KC_BOOTSTRAP_ADMIN_PASSWORD: "admin"
+    ports:
+      - 8080:8080
+    depends_on:
+      db:
+        condition: service_healthy
+
+  wildfly:
+    build: ./backend/lab4/
+    ports:
+      - "12030:12030"
+      - "9990:9990"
+    depends_on:
+      db:
+        condition: service_healthy
+
+  frontend:
+    build: ./frontend/
+    ports:
+      - 4200:4200

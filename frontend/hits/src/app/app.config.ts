@@ -9,15 +9,13 @@ import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@a
 import { AuthInterceptor } from './AuthInterceptor';
 import { provideAnimations } from '@angular/platform-browser/animations';
 
-function initializeKeycloak(authService: AuthenticationService) {
-  return () => authService.init();
-}
-
 
 export const appConfig: ApplicationConfig = {
   providers: [
+    AuthInterceptor,
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     providePrimeNG({ theme: { preset: Lara } }),
-    provideHttpClient( withInterceptorsFromDi()),
+    provideHttpClient(withInterceptorsFromDi()),
     provideRouter(routes),
     provideAnimations(),
     {
@@ -25,8 +23,6 @@ export const appConfig: ApplicationConfig = {
       useFactory: (auth: AuthenticationService) => () => auth.init(),
       multi: true,
       deps: [AuthenticationService]
-    },
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
-
-  ],
+    }
+    ],
 };

@@ -1,8 +1,11 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { HttpInterceptor, HttpRequest, HttpHandler } from '@angular/common/http';
+import { AuthenticationService } from './services/AuthenticationService';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
+
+  private authenticationService = inject(AuthenticationService);
 
   private getCookie(name: string): string | null {
     const matches = document.cookie.match(new RegExp(
@@ -12,7 +15,8 @@ export class AuthInterceptor implements HttpInterceptor {
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler) {
-    const token = this.getCookie('access_token');
+    const token = this.authenticationService.getToken() || this.getCookie('access_token');
+    console.log(token);
 
     if (token) {
       const cloned = req.clone({
