@@ -50,21 +50,25 @@ export class HitService {
             });
     }
     public hit(hitData: HitFormData) {
-        return this.http.post<void>(`${this.baseUrl}/hits/hit`, hitData).pipe(
-            tap(() => {
-                this.refreshHits();
-                this.wsService.sync();
-            })
-        );
+      return this.http.post<void>(`${this.baseUrl}/hits/hit`, hitData).pipe(
+        tap(() => {
+          this.refreshHits();
+          try {
+            this.wsService.sync();
+          } catch (e) {}
+        })
+      );
     }
 
     public clearHits() {
-        return this.http.delete<void>(`${this.baseUrl}/hits/clear`).pipe(
-            tap(() => {
-                this.refreshHits();
-                this.wsService.sync();
-            })
-        );
+      return this.http.delete<void>(`${this.baseUrl}/hits/clear`).pipe(
+        tap(() => {
+          this.refreshHits();
+          try {
+            this.wsService.sync();
+          } catch (e) {}
+        })
+      );
     }
 
     public addHit(hit: Hit) {

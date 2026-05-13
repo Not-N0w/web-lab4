@@ -8,6 +8,6 @@ import java.util.List;
 
 @Repository
 public interface HitRepository extends CrudRepository<Hit, Long> {
-    List<Hit> findByUserId(String userId);
+    List<Hit> findByUserIdOrderByCurrentTimeAsc(String userId);
     void deleteAllByUserId(String userId);
 }

@@ -20,8 +20,11 @@ public class Hit {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String userId;
+    @Column(columnDefinition = "TEXT")
     private BigDecimal x;
+    @Column(columnDefinition = "TEXT")
     private BigDecimal y;
+    @Column(columnDefinition = "TEXT")
     private BigDecimal r;
     private Boolean hit;
     private String currentTime;

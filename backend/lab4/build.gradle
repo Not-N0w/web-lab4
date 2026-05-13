@@ -1,10 +1,10 @@
 plugins {
     id 'java'
-    id 'war'
 }
 
 group = 'com.github.not.n0w'
 version = '1.0-SNAPSHOT'
+
 
 repositories {
     mavenCentral()
@@ -31,4 +31,63 @@ dependencies {
     implementation "org.springframework:spring-websocket:5.3.30"
     implementation "org.springframework:spring-context-support:5.3.30"
     implementation "org.springframework:spring-messaging:5.3.30"
+
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.2'
+    testImplementation 'org.junit.jupiter:junit-jupiter-params:5.10.2'
+    testImplementation 'org.mockito:mockito-core:5.11.0'
+    testImplementation 'org.mockito:mockito-junit-jupiter:5.11.0'
+    testImplementation("io.rest-assured:spring-mock-mvc:3.0.0")
+    testImplementation 'org.springframework:spring-test:5.3.30'
+    testImplementation 'org.springframework:spring-webmvc:5.3.30'
+    testImplementation 'javax.servlet:javax.servlet-api:4.0.1'
+    testImplementation 'com.fasterxml.jackson.core:jackson-databind:2.15.2'
+    testImplementation 'com.jayway.jsonpath:json-path:2.8.0'
+    implementation("org.seleniumhq.selenium:selenium-java:4.43.0")
+}
+
+
+
+tasks.register('compile', JavaCompile) {
+    group = 'lab3'
+    dependsOn 'classes'
+}
+
+tasks.named('build') {
+    group = 'lab3'
+
+    dependsOn 'compile'
+    dependsOn 'jar'
+}
+
+tasks.named('clean') {
+    group = 'lab3'
+
+    doLast {
+        exec {
+            commandLine 'rm', '-rf', "$buildDir"
+        }
+    }
+}
+
+tasks.named('test', Test) {
+    useJUnitPlatform()
+    exclude '**/selenium/**'
+
+    testLogging {
+        events 'passed', 'failed', 'skipped'
+    }
+}
+
+tasks.register('selenium-test', Test) {
+    group 'lab3'
+
+    useJUnitPlatform()
+    testClassesDirs = sourceSets.test.output.classesDirs
+    classpath = sourceSets.test.runtimeClasspath
+
+    include '**/selenium/**'
+
+    testLogging {
+        events 'passed', 'failed', 'skipped'
+    }
 }

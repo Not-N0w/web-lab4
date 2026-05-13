@@ -5,23 +5,15 @@
                                  http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd"
              version="2.2">
 
-    <persistence-unit name="HitsPersistenceUnit" transaction-type="JTA">
+    <persistence-unit name="HitsPersistenceUnit">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <jta-data-source>java:jboss/datasources/PostgresDS</jta-data-source>
-
         <class>com.github.not.n0w.lab4.model.Hit</class>
-        <class>com.github.not.n0w.lab4.model.UserSession</class>
 
         <properties>
-            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://db:5432/lab4_db"/>
-            <property name="javax.persistence.jdbc.user" value="postgres"/>
-            <property name="javax.persistence.jdbc.password" value="postgres"/>
-
             <property name="hibernate.hbm2ddl.auto" value="update"/>
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.format_sql" value="true"/>
-
-            <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
         </properties>
     </persistence-unit>
 </persistence>

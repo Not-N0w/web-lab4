@@ -20,7 +20,6 @@ export class HitsTable implements OnInit {
 
   hits$ = this.hitService.hits().pipe(
     map(hits => hits ?? []),
-    map(hits => [...hits].reverse())
   );
 
   ngOnInit() {

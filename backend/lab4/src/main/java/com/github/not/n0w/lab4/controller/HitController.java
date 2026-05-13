@@ -7,8 +7,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @CrossOrigin(origins = "*")
@@ -20,6 +20,9 @@ public class HitController {
 
     @PostMapping("hit")
     public void hit(@RequestBody HitRequestDto hit) {
+        if (hit == null || hit.getX() == null || hit.getY() == null || hit.getR() == null) {
+            throw new HttpMessageNotReadableException("Invalid request body. Check x, y, and r values.");
+        }
         hitService.hit(hit);
     }
 
@@ -32,7 +35,6 @@ public class HitController {
     public void clearAll() {
         hitService.clear();
     }
-
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<String> handleInvalidHitRequest(HttpMessageNotReadableException ex) {

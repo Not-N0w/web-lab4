@@ -8,7 +8,7 @@ export class ShortNumberPipe implements PipeTransform {
     if (value == null) return '';
     const str = value.toString();
     const dotIndex = str.indexOf('.');
-    if (dotIndex === -1 || str.length <= dotIndex + 2) return str;
+    if (dotIndex === -1 || str.length <= dotIndex + 3) return str;
     const integerPart = str.slice(0, dotIndex);
     const firstDecimal = str[dotIndex + 1];
     const lastChar = str[str.length - 1];

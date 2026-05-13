@@ -1,26 +1,23 @@
 services:
   db:
     image: postgres
-    environment:
-      POSTGRES_DB: "lab4_db"
-      POSTGRES_USER: "postgres"
-      POSTGRES_PASSWORD: "postgres"
+    env_file: ./env/db.env
     ports:
       - "5432:5432"
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres -d postgres"]
       interval: 10s
-      retries: 5
+      timeout: 5s
+      retries: 10
       start_period: 30s
-      timeout: 10s
+    volumes:
+      - db-data-volume:/var/lib/postgresql/
 
   keycloak:
     build: ./backend/keycloak-26.4.6/
-    environment:
-      KC_BOOTSTRAP_ADMIN_USERNAME: "admin"
-      KC_BOOTSTRAP_ADMIN_PASSWORD: "admin"
+    env_file: ./env/keycloak.env
     ports:
-      - 8080:8080
+      - "8080:8080"
     depends_on:
       db:
         condition: service_healthy
@@ -30,11 +27,16 @@ services:
     ports:
       - "12030:12030"
       - "9990:9990"
+    env_file: ./env/wildfly.env
     depends_on:
       db:
         condition: service_healthy
 
   frontend:
     build: ./frontend/
+    env_file: ./env/frontend.env
     ports:
-      - 4200:4200
+      - "4200:4200"
+
+volumes:
+  db-data-volume:

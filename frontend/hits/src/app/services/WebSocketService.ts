@@ -54,7 +54,9 @@ export class WebSocketService {
     }
 
     sync() {
-        this.client?.publish({
+      if (!this.client || !this.client.active || !this.connected) return;
+
+      this.client.publish({
             destination: '/app/hit',
             body: "need_sync"
         });

@@ -42,7 +42,7 @@ public class HitService {
 
     @Transactional(readOnly = true)
     public List<HitResponseDto> getAll() {
-        return hitRepository.findByUserId(securityService.currentUserId())
+        return hitRepository.findByUserIdOrderByCurrentTimeAsc(securityService.currentUserId())
                 .stream()
                 .map(hit -> new HitResponseDto(
                         hit.getX(),

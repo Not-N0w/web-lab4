@@ -1,15 +1,20 @@
+FROM gradle:jdk11 AS build
+
+COPY settings.gradle ./
+COPY standart-build.gradle ./build.gradle
+COPY gradlew ./
+COPY gradle/ gradle/
+COPY src src
+
+RUN ./gradlew clean build --no-daemon
+
 FROM jboss/wildfly:20.0.1.Final
-LABEL authors="yaroslavmakogon"
 
 WORKDIR ./wildfly
 
+COPY --from=build /home/gradle/build/libs/ ./standalone/deployments/
 COPY ./standalone.xml ./standalone/configuration/
-
-COPY ./build/libs/lab4-1.0-SNAPSHOT.war ./standalone/deployments/
-
-COPY ./wildfly-20.0.1.Final/modules/system/layers/base/org/postgresql/main/module.xml ./modules/system/layers/base/org/postgresql/main/
-
-COPY ./wildfly-20.0.1.Final/modules/system/layers/base/org/postgresql/main/postgresql-42.7.8.jar ./modules/system/layers/base/org/postgresql/main/
+COPY ./wildfly-20.0.1.Final/modules/system/layers/base/org/postgresql/main/ ./modules/system/layers/base/org/postgresql/main/
 
 RUN /opt/jboss/wildfly/bin/add-user.sh admin password123 --silent
 

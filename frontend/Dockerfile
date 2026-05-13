@@ -1,7 +1,5 @@
 FROM node:alpine
 
-LABEL authors="yaroslavmakogon"
-
 WORKDIR /usr/src/app
 
 COPY ./hits/ /usr/src/app
